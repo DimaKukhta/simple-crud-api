@@ -14,7 +14,7 @@ const server = http.createServer(async (req, res) => {
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(persons));
-  } else if (req.url.startsWith('/person/') && req.method === 'GET') {
+  } else if (req.url.split('/').length === 3 && req.method === 'GET') {
     try {
       const id = req.url.split('/')[2];
       const person = await controller.getPersonById(id);
@@ -54,7 +54,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ message: 'Server error' }));
       }
     }
-  } else if (req.url.startsWith('/person/') && req.method === 'PUT') {
+  } else if (req.url.split('/').length === 3 && req.method === 'PUT') {
     try {
       const id = req.url.split('/')[2];
       const data = await getReqData(req);
@@ -84,7 +84,7 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ message: 'Server error' }));
       }
     }
-  } else if (req.url.startsWith('/person/') && req.method === 'DELETE') {
+  } else if (req.url.split('/').length === 3 && req.method === 'DELETE') {
     try {
       const id = req.url.split('/')[2];
       await controller.deletePerson(id);
