@@ -49,6 +49,11 @@ class Controller {
   async updatePerson(data) {
     let index = null;
     return new Promise((res, rej) => {
+      const { name, age, hobbies, id } = data;
+      if (!name || !age || !hobbies) {
+        rej('Required arguments are missing');
+        return;
+      }
       const result = validateArgs(data);
       if (!result.isValid) {
         rej(result.message);
@@ -65,7 +70,9 @@ class Controller {
           rej('Person not found');
           return;
         }
-        persons[index] = data;
+
+       
+        persons[index] = { id, name, age, hobbies };
         res(persons[index]);
       }
     });

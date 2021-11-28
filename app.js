@@ -2,7 +2,6 @@ const http = require('http');
 const dotenv = require('dotenv');
 const Controller = require('./controllers/controller');
 const { getReqData } = require('./utils');
-const { validate } = require('uuid');
 
 dotenv.config();
 
@@ -77,6 +76,9 @@ const server = http.createServer(async (req, res) => {
       } else if (e === 'Person not found') {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: e }));
+      } else if (e === 'Required arguments are missing') {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: e }));
       } else {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Server error' }));
@@ -109,3 +111,5 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`server started on port: ${PORT}`);
 });
+
+module.exports = server;
